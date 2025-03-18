@@ -1,0 +1,14 @@
+# Ignorar la carpeta obj
+obj/
+
+# Ignorar la carpeta bin
+bin/
+
+# Ignorar el archivo Program.cs
+BuscaMinas/Program.cs
+
+# Ignorar el archivo BuscaMinas.csproj
+BuscaMinas/BuscaMinas.csproj
+
+# Ignorar el archivo Universidad.sln
+BuscaMinas/Universidad.sln
