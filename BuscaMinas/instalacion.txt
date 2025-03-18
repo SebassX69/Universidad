@@ -1,0 +1,10 @@
+Tener instalado .net
+
+Crear la Carpeta con Nombre BuscaMinas
+Ejecutar dentro de la carpeta el comando: dotnet new console
+
+Se crea automaticamente un archivo llamado Program.cs 
+
+Reemplazar lo que hay en el Program.cs por lo que hay en el Program.cs.txt
+
+Luego para correr el programa con el comando: dotnet run
