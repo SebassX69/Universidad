@@ -9,7 +9,7 @@ Program.cs
 BuscaMinas/Program.cs
 
 # Ignorar el archivo BuscaMinas.csproj
-BuscaMinas/BuscaMinas.csproj
+BuscaMinas.csproj
 
 # Ignorar el archivo Universidad.sln
-BuscaMinas/Universidad.sln
+Universidad.sln
