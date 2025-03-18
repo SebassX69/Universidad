@@ -6,7 +6,6 @@ bin/
 
 # Ignorar el archivo Program.cs
 Program.cs
-BuscaMinas/Program.cs
 
 # Ignorar el archivo BuscaMinas.csproj
 BuscaMinas.csproj
