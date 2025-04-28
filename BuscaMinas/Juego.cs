@@ -268,7 +268,7 @@ namespace Buscaminas
                     }
                     else
                     {
-                        Console.Write("[ ] "); // Celda vacía revelada
+                        Console.Write("[.] "); // Celda vacía revelada
                     }
                 }
                 Console.WriteLine();
