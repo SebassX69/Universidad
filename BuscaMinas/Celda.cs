@@ -4,35 +4,60 @@ namespace Buscaminas
 {
     // Clase que representa una celda individual del tablero
     // Implementa la interfaz IPrototype para el patrón Prototype
+    // Ahora utiliza el patrón Flyweight para compartir el estado intrínseco
     public class Celda : IPrototype
     {
-        // Propiedades de la celda
+        // Propiedades extrínsecas (específicas de cada celda)
         public int Fila { get; set; }
         public int Columna { get; set; }
-        public bool TieneMina { get; set; }
-        public int MinasAdyacentes { get; set; }
         public bool EstaRevelada { get; set; }
         public bool EstaMarcada { get; set; }
+        
+        // Estado compartido (Flyweight)
+        private EstadoCelda _estado;
+        
+        // Propiedades de acceso al estado compartido
+        public bool TieneMina 
+        { 
+            get { return _estado.TieneMina; }
+            set 
+            { 
+                // Al cambiar esta propiedad, necesitamos actualizar el estado compartido
+                _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(value, MinasAdyacentes);
+            }
+        }
+        
+        public int MinasAdyacentes 
+        { 
+            get { return _estado.MinasAdyacentes; }
+            set 
+            { 
+                // Al cambiar esta propiedad, necesitamos actualizar el estado compartido
+                _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(TieneMina, value);
+            }
+        }
         
         // Constructor de la celda
         public Celda(int fila, int columna)
         {
             Fila = fila;
             Columna = columna;
-            TieneMina = false;
-            MinasAdyacentes = 0;
             EstaRevelada = false;
             EstaMarcada = false;
+            
+            // Obtener el estado inicial (sin mina, 0 minas adyacentes)
+            _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(false, 0);
         }
         
         // Implementación del método Clonar de la interfaz IPrototype
         public IPrototype Clonar()
         {
             Celda clon = new Celda(this.Fila, this.Columna);
-            clon.TieneMina = this.TieneMina;
-            clon.MinasAdyacentes = this.MinasAdyacentes;
             clon.EstaRevelada = this.EstaRevelada;
             clon.EstaMarcada = this.EstaMarcada;
+            
+            // También clonamos el estado compartido (pero se sigue compartiendo el mismo objeto)
+            clon._estado = this._estado;
             
             return clon;
         }
