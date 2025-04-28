@@ -10,7 +10,5 @@ Program.cs
 # Ignorar el archivo BuscaMinas.csproj
 BuscaMinas.csproj
 
-# Ignorar el archivo Universidad.sln
-Universidad.sln
-
-BuscaMinas.sln
+# Ignorar todos los archivos terminados en .sln
+*.sln
