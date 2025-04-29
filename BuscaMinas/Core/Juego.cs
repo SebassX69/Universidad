@@ -11,8 +11,6 @@ namespace Buscaminas
         // Propiedades del juego
         private Tablero? _tablero;
         private GeneradorMinas _generadorMinas;
-        private bool _juegoTerminado;
-        private bool _victoria;
         
         // Propiedad para acceder al tablero actual
         public Tablero? TableroActual => _tablero;
@@ -21,8 +19,6 @@ namespace Buscaminas
         private Juego()
         {
             _generadorMinas = new GeneradorMinas();
-            _juegoTerminado = false;
-            _victoria = false;
         }
         
         // Método para obtener la instancia única (Singleton)
@@ -40,52 +36,12 @@ namespace Buscaminas
         {
             // Crear un nuevo tablero
             _tablero = new Tablero(tamano);
-            _juegoTerminado = false;
-            _victoria = false;
             
             // Generar y colocar las minas en el tablero
             _generadorMinas.GenerarMinas(_tablero, numMinas);
             
             // Calcular números para las celdas adyacentes a minas
             CalcularNumerosAdyacentes();
-        }
-        
-        // Finalizar el juego
-        public void FinalizarJuego(bool victoria)
-        {
-            _juegoTerminado = true;
-            _victoria = victoria;
-            
-            if (victoria)
-            {
-                Console.WriteLine("¡Has ganado! Todas las celdas sin minas han sido reveladas.");
-            }
-            else
-            {
-                Console.WriteLine("¡Has perdido! Has revelado una celda con mina.");
-            }
-        }
-        
-        // Verificar si todas las celdas sin minas han sido reveladas (victoria)
-        public bool VerificarVictoria()
-        {
-            if (_tablero == null) return false;
-            
-            for (int fila = 0; fila < _tablero.Tamano; fila++)
-            {
-                for (int columna = 0; columna < _tablero.Tamano; columna++)
-                {
-                    Celda celda = _tablero.ObtenerCelda(fila, columna);
-                    
-                    // Si hay una celda que no tiene mina y no está revelada, aún no ha ganado
-                    if (!celda.TieneMina && !celda.EstaRevelada)
-                    {
-                        return false;
-                    }
-                }
-            }
-            
-            return true;
         }
         
         // Revelar celdas vecinas recursivamente (cuando se revela una celda con 0 minas adyacentes)
@@ -169,60 +125,6 @@ namespace Buscaminas
                     _tablero.ObtenerCelda(fila, columna).MinasAdyacentes = contadorMinas;
                 }
             }
-        }
-        
-        // Método para contar las minas en el tablero
-        public int ContarMinas()
-        {
-            if (_tablero == null) return 0;
-            
-            int contador = 0;
-            for (int fila = 0; fila < _tablero.Tamano; fila++)
-            {
-                for (int columna = 0; columna < _tablero.Tamano; columna++)
-                {
-                    if (_tablero.ObtenerCelda(fila, columna).TieneMina)
-                        contador++;
-                }
-            }
-            
-            return contador;
-        }
-        
-        // Método para contar las celdas reveladas
-        public int ContarCeldasReveladas()
-        {
-            if (_tablero == null) return 0;
-            
-            int contador = 0;
-            for (int fila = 0; fila < _tablero.Tamano; fila++)
-            {
-                for (int columna = 0; columna < _tablero.Tamano; columna++)
-                {
-                    if (_tablero.ObtenerCelda(fila, columna).EstaRevelada)
-                        contador++;
-                }
-            }
-            
-            return contador;
-        }
-        
-        // Método para contar las celdas marcadas
-        public int ContarCeldasMarcadas()
-        {
-            if (_tablero == null) return 0;
-            
-            int contador = 0;
-            for (int fila = 0; fila < _tablero.Tamano; fila++)
-            {
-                for (int columna = 0; columna < _tablero.Tamano; columna++)
-                {
-                    if (_tablero.ObtenerCelda(fila, columna).EstaMarcada)
-                        contador++;
-                }
-            }
-            
-            return contador;
         }
         
         // Mostrar el tablero en la consola

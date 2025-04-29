@@ -36,23 +36,10 @@ namespace Buscaminas
             // Marcar como revelada
             celda.EstaRevelada = true;
             
-            // Verificar si tocó una mina
-            if (celda.TieneMina)
-            {
-                _juego.FinalizarJuego(false);
-                return true;
-            }
-            
             // Si la celda no tiene minas adyacentes, revelar las celdas vecinas (recursivamente)
             if (celda.MinasAdyacentes == 0)
             {
                 _juego.RevelarCeldasVecinas(fila, columna);
-            }
-            
-            // Verificar si ganó el juego
-            if (_juego.VerificarVictoria())
-            {
-                _juego.FinalizarJuego(true);
             }
             
             return true;
@@ -80,20 +67,6 @@ namespace Buscaminas
         public void MostrarTablero(bool mostrarMinas = false)
         {
             _juego.MostrarTablero(mostrarMinas);
-        }
-        
-        // Método para obtener una estadística rápida del tablero actual
-        public (int tamano, int numMinas, int celdasReveladas, int celdasMarcadas) ObtenerEstadisticas()
-        {
-            if (_juego.TableroActual == null)
-                throw new InvalidOperationException("El juego no ha sido inicializado.");
-            
-            int tamano = _juego.TableroActual.Tamano;
-            int numMinas = _juego.ContarMinas();
-            int celdasReveladas = _juego.ContarCeldasReveladas();
-            int celdasMarcadas = _juego.ContarCeldasMarcadas();
-            
-            return (tamano, numMinas, celdasReveladas, celdasMarcadas);
         }
     }
 }
