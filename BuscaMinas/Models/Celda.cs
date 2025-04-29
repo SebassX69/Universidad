@@ -2,9 +2,7 @@ using System;
 
 namespace Buscaminas
 {
-    // Clase que representa una celda individual del tablero
-    // Implementa la interfaz IPrototype para el patrón Prototype
-    // Ahora utiliza el patrón Flyweight para compartir el estado intrínseco
+
     public class Celda : IPrototype
     {
         // Propiedades extrínsecas (específicas de cada celda)
@@ -22,7 +20,6 @@ namespace Buscaminas
             get { return _estado.TieneMina; }
             set 
             { 
-                // Al cambiar esta propiedad, necesitamos actualizar el estado compartido
                 _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(value, MinasAdyacentes);
             }
         }
@@ -32,20 +29,17 @@ namespace Buscaminas
             get { return _estado.MinasAdyacentes; }
             set 
             { 
-                // Al cambiar esta propiedad, necesitamos actualizar el estado compartido
                 _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(TieneMina, value);
             }
         }
         
-        // Constructor de la celda
         public Celda(int fila, int columna)
         {
             Fila = fila;
             Columna = columna;
             EstaRevelada = false;
             EstaMarcada = false;
-            
-            // Obtener el estado inicial (sin mina, 0 minas adyacentes)
+
             _estado = FabricaEstadoCelda.ObtenerInstancia().ObtenerEstadoCelda(false, 0);
         }
         
@@ -56,13 +50,11 @@ namespace Buscaminas
             clon.EstaRevelada = this.EstaRevelada;
             clon.EstaMarcada = this.EstaMarcada;
             
-            // También clonamos el estado compartido (pero se sigue compartiendo el mismo objeto)
             clon._estado = this._estado;
             
             return clon;
         }
         
-        // Método adicional que permite clonar con coordenadas específicas
         public Celda ClonarEnPosicion(int fila, int columna)
         {
             Celda clon = (Celda)this.Clonar();
